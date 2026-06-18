@@ -4,19 +4,21 @@
 
 const themeToggle = document.getElementById("themeToggle");
 
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("lavender-theme");
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("lavender-theme");
 
-  const lavenderIsOn = document.body.classList.contains("lavender-theme");
+    const lavenderIsOn = document.body.classList.contains("lavender-theme");
 
-  if (lavenderIsOn) {
-    themeToggle.textContent = "Pink Mode";
-  } else {
-    themeToggle.textContent = "Lavender Mode";
-  }
+    if (lavenderIsOn) {
+      themeToggle.textContent = "Pink Mode";
+    } else {
+      themeToggle.textContent = "Lavender Mode";
+    }
 
-  createSparkleBurst(themeToggle);
-});
+    createSparkleBurst(themeToggle);
+  });
+}
 
 // =========================
 // FAVORITE CARDS INTERACTION
@@ -38,9 +40,11 @@ favoriteCards.forEach((card) => {
 
   const summary = card.querySelector("summary");
 
-  summary.addEventListener("click", () => {
-    createSparkleBurst(summary);
-  });
+  if (summary) {
+    summary.addEventListener("click", () => {
+      createSparkleBurst(summary);
+    });
+  }
 });
 
 // =========================
@@ -102,7 +106,7 @@ if (contactSection) {
 // =========================
 
 function createSparkleBurst(element) {
-  const sparkleSymbols = ["✦", "♡", "✧", "✿", "₊˚"];
+  const sparkleSymbols = ["âœ¦", "â™¡", "âœ§", "âœ¿", "â‚ŠËš"];
 
   const rect = element.getBoundingClientRect();
   const startX = rect.left + rect.width / 2;

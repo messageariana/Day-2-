@@ -1,12 +1,257 @@
-✦
-♡
-✧
-✿
-✦
-hi there, and
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ariana's Portfolio</title>
 
-Welcome!
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
 
-come take a peek at my portfolio ♡
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-↓ enter
+  <div class="background">
+    <div class="blob blob-one"></div>
+    <div class="blob blob-two"></div>
+    <div class="blob blob-three"></div>
+
+    <div class="sparkle sparkle-one">✦</div>
+    <div class="sparkle sparkle-two">♡</div>
+    <div class="sparkle sparkle-three">✧</div>
+    <div class="sparkle sparkle-four">✿</div>
+    <div class="sparkle sparkle-five">✦</div>
+  </div>
+
+  <header class="page-header">
+
+    <nav class="nav">
+      <a href="index.html" class="nav-logo">Ariana</a>
+
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#favorites">Favorites</a>
+        <a href="bakeryboss.html">Bakery Boss</a>
+        <a href="#contact">Contact</a>
+
+        <button id="themeToggle" class="theme-toggle" type="button">
+          Lavender Mode
+        </button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>
+          Ariana's
+          <span>Portfolio</span>
+        </h1>
+
+        <p class="hero-description">
+          Hi, I'm Ariana! I play soccer for Red Star, and I love baking,
+          singing, and eating dim sum.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#favorites" class="main-button">Explore My Favorites</a>
+          <a href="#about" class="secondary-button">About Me</a>
+          <button id="playGameBtn" class="game-button" type="button">Play My Game! 🎮</button>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="profile-card">
+          <div class="profile-circle">
+            <span>A</span>
+          </div>
+
+          <h2>Ariana</h2>
+          <p>Soccer player • Baker • Singer • Dim sum fan</p>
+
+          <div class="cute-tags">
+            <span>⚽ Red Star</span>
+            <span>🧁 Baking</span>
+            <span>🎤 Singing</span>
+            <span>🥟 Dim Sum</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </header>
+
+  <main>
+
+    <section id="about" class="about-section reveal">
+      <div class="section-heading">
+        <p>get to know me</p>
+        <h2>About Ariana</h2>
+      </div>
+
+      <div class="about-card">
+        <p>
+          Hi, I'm Ariana! I play soccer for <strong>Red Star</strong>.
+          I also love baking, singing, and eating dim sum.
+        </p>
+      </div>
+    </section>
+
+    <section id="favorites" class="favorites-section reveal">
+      <div class="section-heading">
+        <p>click the cards</p>
+        <h2>My Favorite Things</h2>
+      </div>
+
+      <div class="cards-grid">
+
+        <details class="favorite-card soccer-card">
+          <summary>
+            <div class="card-top">
+              <div class="icon-bubble">⚽</div>
+              <p class="card-label">favorite sport</p>
+            </div>
+
+            <div>
+              <h3>Soccer</h3>
+              <p class="click-text">Click to reveal a fact</p>
+            </div>
+          </summary>
+
+          <div class="hidden-fact">
+            <p>
+              I play soccer for <strong>Red Star</strong>! I like how soccer takes teamwork,
+              speed, focus, and confidence.
+            </p>
+          </div>
+        </details>
+
+        <details class="favorite-card baking-card">
+          <summary>
+            <div class="card-top">
+              <div class="icon-bubble">🧁</div>
+              <p class="card-label">favorite hobby</p>
+            </div>
+
+            <div>
+              <h3>Baking</h3>
+              <p class="click-text">Click to reveal a fact</p>
+            </div>
+          </summary>
+
+          <div class="hidden-fact">
+            <p>
+              Baking is fun because it feels creative. You can mix ingredients
+              and turn them into something sweet and pretty.
+            </p>
+          </div>
+        </details>
+
+        <details class="favorite-card singing-card">
+          <summary>
+            <div class="card-top">
+              <div class="icon-bubble">🎤</div>
+              <p class="card-label">favorite talent</p>
+            </div>
+
+            <div>
+              <h3>Singing</h3>
+              <p class="click-text">Click to reveal a fact</p>
+            </div>
+          </summary>
+
+          <div class="hidden-fact">
+            <p>
+              Singing is one of my favorite ways to express myself.
+              Music can make a normal day feel special.
+            </p>
+          </div>
+        </details>
+
+        <details class="favorite-card dimsum-card">
+          <summary>
+            <div class="card-top">
+              <div class="icon-bubble">🥟</div>
+              <p class="card-label">favorite food</p>
+            </div>
+
+            <div>
+              <h3>Dim Sum</h3>
+              <p class="click-text">Click to reveal a fact</p>
+            </div>
+          </summary>
+
+          <div class="hidden-fact">
+            <p>
+              I love dim sum because there are so many little dishes to try,
+              like dumplings, buns, and other delicious foods.
+            </p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <section class="bakery-promo reveal">
+      <div class="bakery-promo-card">
+        <div class="bakery-promo-emoji">🧁</div>
+        <h2>Check out Bakery Boss!</h2>
+        <p>A game my table group designed together. See what I worked on and play all three mini-games.</p>
+        <a href="bakeryboss.html" class="main-button">Go to Bakery Boss →</a>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section reveal">
+      <div class="contact-card">
+        <p class="contact-small">thanks for visiting</p>
+        <h2>Ariana's Portfolio</h2>
+        <p><a href="mailto:messageariana@gmail.com">messageariana@gmail.com</a></p>
+        <p><a href="tel:650-402-8340">650-402-8340</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer-signature">
+    <div class="signature-card">
+      <p class="made-by">Made by Ariana ♡</p>
+      <p class="signature-line">Dream big, sing loud, play hard.</p>
+    </div>
+  </footer>
+
+  <!-- ===== GAME POP-UP (hidden until you click "Play My Game!") ===== -->
+  <div id="gameModal" class="game-modal">
+    <div class="game-container">
+      <div class="game-header">
+        <h2>Ariana's Adventure</h2>
+        <button id="closeGameBtn" class="close-game" type="button">✕</button>
+      </div>
+
+      <div class="game-info">
+        <div class="level-display">Level: <span id="levelNumber">1</span>/4</div>
+        <div class="fact-display" id="factDisplay"></div>
+      </div>
+
+      <canvas id="gameCanvas" width="800" height="500"></canvas>
+
+      <div class="game-controls">
+        <p>Arrow Keys to Move • Space to Jump</p>
+        <button id="resetGameBtn" class="reset-btn" type="button">Reset Level</button>
+      </div>
+
+      <div id="gameOver" class="game-over-screen" style="display: none;">
+        <div class="game-over-content">
+          <h3 id="gameOverTitle">You Made It!</h3>
+          <p id="gameOverMessage"></p>
+          <button id="nextLevelBtn" class="next-level-btn" type="button">Next Level →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>

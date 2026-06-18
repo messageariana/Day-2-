@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Music</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="background">
+    <div class="blob blob-one"></div>
+    <div class="blob blob-two"></div>
+    <div class="blob blob-three"></div>
+
+    <div class="sparkle sparkle-one">✦</div>
+    <div class="sparkle sparkle-two">♡</div>
+    <div class="sparkle sparkle-three">✧</div>
+    <div class="sparkle sparkle-four">♪</div>
+    <div class="sparkle sparkle-five">✦</div>
+  </div>
+
+  <header class="page-header">
+    <nav class="nav">
+      <a href="index.html" class="nav-logo">Ariana</a>
+      <div class="nav-links">
+        <a href="portfolio.html">← Back to Portfolio</a>
+        <button id="themeToggle" class="theme-toggle" type="button">Lavender Mode</button>
+      </div>
+    </nav>
+
+    <section class="hero music-hero">
+      <div class="hero-text">
+        <h1>My <span>Music</span></h1>
+        <p class="hero-description">
+          A few of my favorite songs! Pick a record, set it on the player,
+          and it'll start spinning. 🎶
+        </p>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="music-section">
+
+      <!-- The record player -->
+      <div class="record-player" id="turntable">
+        <div class="platter">
+          <div class="platter-label" id="platterLabel"></div>
+          <div class="spindle"></div>
+        </div>
+        <div class="tonearm">
+          <div class="tonearm-base"></div>
+        </div>
+      </div>
+
+      <p class="now-playing" id="nowPlaying">Pick a record below to start the music ♫</p>
+      <button id="stopBtn" class="reset-btn" type="button">⏹ Stop</button>
+
+      <!-- The real song plays here (official YouTube player) -->
+      <div class="yt-wrap" id="ytWrap">
+        <iframe id="ytFrame" src="" title="Song player"
+          frameborder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <!-- The crate of records -->
+      <h2 class="shelf-heading">Pick a record 🎵</h2>
+      <div class="record-shelf">
+
+        <button class="record" type="button"
+          data-id="cswfR85D7jM" data-title="love me not" data-artist="Ravyn Lenae" data-color="#7fd1ff">
+          <span class="vinyl"><span class="vinyl-label" style="background:#7fd1ff;">♪</span></span>
+          <span class="record-title">love me not</span>
+          <span class="record-artist">Ravyn Lenae</span>
+        </button>
+
+        <button class="record" type="button"
+          data-id="OGUy2UmRxJ0" data-title="brutal" data-artist="Olivia Rodrigo" data-color="#ff6eac">
+          <span class="vinyl"><span class="vinyl-label" style="background:#ff6eac;">♪</span></span>
+          <span class="record-title">brutal</span>
+          <span class="record-artist">Olivia Rodrigo</span>
+        </button>
+
+        <button class="record" type="button"
+          data-id="msGuqelopMA" data-title="daisies" data-artist="Justin Bieber" data-color="#ffd451">
+          <span class="vinyl"><span class="vinyl-label" style="background:#ffd451;">♪</span></span>
+          <span class="record-title">daisies</span>
+          <span class="record-artist">Justin Bieber</span>
+        </button>
+
+        <button class="record" type="button"
+          data-id="mCkBsSEG440" data-title="babydoll" data-artist="Ari Abdul" data-color="#a67cff">
+          <span class="vinyl"><span class="vinyl-label" style="background:#a67cff;">♪</span></span>
+          <span class="record-title">babydoll</span>
+          <span class="record-artist">Ari Abdul</span>
+        </button>
+
+        <button class="record" type="button"
+          data-id="lY5V4hSLWY8" data-title="risk it all" data-artist="Bruno Mars" data-color="#ff9ac8">
+          <span class="vinyl"><span class="vinyl-label" style="background:#ff9ac8;">♪</span></span>
+          <span class="record-title">risk it all</span>
+          <span class="record-artist">Bruno Mars</span>
+        </button>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-signature">
+    <div class="signature-card">
+      <p class="made-by">Made by Ariana ♡</p>
+      <p class="signature-line">Dream big, sing loud, play hard.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== RECORD PLAYER =====
+    const turntable    = document.getElementById("turntable");
+    const platterLabel = document.getElementById("platterLabel");
+    const nowPlaying   = document.getElementById("nowPlaying");
+    const ytWrap       = document.getElementById("ytWrap");
+    const ytFrame      = document.getElementById("ytFrame");
+    const records      = document.querySelectorAll(".record");
+
+    function playSong(el) {
+      const id     = el.dataset.id;
+      const title  = el.dataset.title;
+      const artist = el.dataset.artist;
+      const color  = el.dataset.color;
+
+      records.forEach((r) => r.classList.remove("selected"));
+      el.classList.add("selected");
+
+      // put the record on the player and spin it
+      platterLabel.textContent = title;
+      platterLabel.style.background = color;
+      turntable.classList.add("playing");
+      nowPlaying.innerHTML = "Now playing: <strong>" + title + "</strong> — " + artist;
+
+      // the song plays in the official YouTube player (autoplay because you clicked)
+      ytFrame.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0";
+      ytWrap.classList.add("show");
+    }
+
+    function stopSong() {
+      records.forEach((r) => r.classList.remove("selected"));
+      turntable.classList.remove("playing");
+      platterLabel.textContent = "";
+      platterLabel.style.background = "";
+      nowPlaying.textContent = "Pick a record below to start the music ♫";
+      ytFrame.src = "";
+      ytWrap.classList.remove("show");
+    }
+
+    records.forEach((r) => r.addEventListener("click", () => playSong(r)));
+    document.getElementById("stopBtn").addEventListener("click", stopSong);
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

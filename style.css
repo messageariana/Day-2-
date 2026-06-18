@@ -1129,3 +1129,442 @@ section {
     scroll-behavior: auto !important;
   }
 }
+/* =========================================================
+   ✨ NEW STYLES (game, welcome page, bakery boss page)
+========================================================= */
+
+/* ----- "Play My Game!" button ----- */
+.game-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #a67cff, #ff8fc1);
+  box-shadow: 0 18px 34px rgba(166, 124, 255, 0.35);
+  transition: 0.25s ease;
+}
+
+.game-button:hover {
+  transform: translateY(-5px) scale(1.03);
+}
+
+/* ----- Game pop-up (modal) ----- */
+.game-modal {
+  display: none;               /* hidden until you press play */
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 20px;
+
+  background: rgba(123, 76, 99, 0.55);
+  backdrop-filter: blur(6px);
+
+  align-items: center;
+  justify-content: center;
+}
+
+.game-modal.active {
+  display: flex;               /* shown when game.js adds .active */
+  animation: fadeUp 0.3s ease both;
+}
+
+.game-container {
+  position: relative;
+  width: min(860px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+
+  padding: 22px;
+  border: 3px solid #ffc7e1;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #fffdfe, #fff2f8);
+  box-shadow: 0 30px 80px rgba(255, 112, 174, 0.35);
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.game-header h2 {
+  font-family: "Baloo 2", cursive;
+  font-size: 1.8rem;
+  color: #ff70ab;
+}
+
+.close-game {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #ffc3df;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ff5ba0;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.close-game:hover {
+  background: #ffe3f0;
+  transform: rotate(90deg);
+}
+
+.game-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.level-display {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #a9587d;
+  background: #ffe3f0;
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+
+.fact-display {
+  flex: 1;
+  min-width: 200px;
+  text-align: right;
+  font-weight: 700;
+  color: #7b4c63;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  border: 3px solid #ffd1e5;
+  background: #dff3ff;
+}
+
+.game-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.game-controls p {
+  font-weight: 700;
+  color: #a9587d;
+}
+
+.reset-btn {
+  padding: 10px 22px;
+  border: 2px solid #ffc3df;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  color: #ff6eac;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.reset-btn:hover {
+  background: #ffe3f0;
+  transform: translateY(-2px);
+}
+
+/* ----- Win / Level-complete screen ----- */
+.game-over-screen {
+  position: absolute;
+  inset: 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+
+  display: flex;               /* game.js toggles this on/off */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.game-over-content {
+  padding: 30px;
+  max-width: 460px;
+}
+
+.game-over-content h3 {
+  font-family: "Baloo 2", cursive;
+  font-size: 2.2rem;
+  color: #ff5ba0;
+  margin-bottom: 12px;
+}
+
+.game-over-content p {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #7b4c63;
+  margin-bottom: 22px;
+}
+
+.next-level-btn {
+  padding: 14px 30px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6eac, #ffa6cf);
+  box-shadow: 0 16px 30px rgba(255, 112, 174, 0.4);
+  transition: 0.25s ease;
+}
+
+.next-level-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+
+/* =========================
+   WELCOME PAGE
+========================= */
+.welcome-body {
+  display: flex;
+  min-height: 100vh;
+}
+
+.welcome-page {
+  margin: auto;
+  text-align: center;
+  padding: 30px;
+  animation: fadeUp 0.9s ease both;
+}
+
+.welcome-hi {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ff9ac8;
+  margin-bottom: 6px;
+}
+
+.welcome-title {
+  font-family: "Baloo 2", cursive;
+  font-size: clamp(4.5rem, 16vw, 9rem);
+  line-height: 0.9;
+  color: #ff78b4;
+  text-shadow:
+    4px 4px 0 #ffffff,
+    8px 8px 0 #ffd2e7,
+    12px 12px 0 rgba(255, 159, 204, 0.35);
+  animation: bubblePop 1s ease both;
+}
+
+.welcome-sub {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #a9587d;
+  margin: 18px 0 40px;
+}
+
+.welcome-arrow {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.welcome-arrow-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6eac, #ffa6cf);
+  box-shadow: 0 18px 34px rgba(255, 112, 174, 0.4);
+
+  animation: arrowBounce 1.4s ease-in-out infinite;
+}
+
+.welcome-arrow-text {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #ff6eac;
+  letter-spacing: 1px;
+}
+
+.welcome-arrow:hover .welcome-arrow-circle {
+  transform: scale(1.08);
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(14px); }
+}
+
+/* =========================
+   BAKERY BOSS PROMO (on portfolio)
+========================= */
+.bakery-promo {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.bakery-promo-card {
+  text-align: center;
+  padding: 48px 30px;
+  border: 3px solid #ffc7e1;
+  border-radius: 40px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,244,250,0.92));
+  box-shadow: 0 28px 60px rgba(255, 143, 193, 0.22);
+}
+
+.bakery-promo-emoji {
+  font-size: 3.4rem;
+  margin-bottom: 10px;
+}
+
+.bakery-promo-card h2 {
+  font-family: "Baloo 2", cursive;
+  font-size: 2.4rem;
+  color: #ff70ab;
+  margin-bottom: 12px;
+}
+
+.bakery-promo-card p {
+  font-size: 1.1rem;
+  color: #7b4c63;
+  max-width: 540px;
+  margin: 0 auto 26px;
+}
+
+/* =========================
+   BAKERY BOSS PAGE
+========================= */
+.bakery-hero {
+  padding-bottom: 40px;
+}
+
+.contributions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.contribution-card {
+  text-align: center;
+  padding: 30px 24px;
+  cursor: default;
+}
+
+.contribution-card .icon-bubble {
+  margin: 0 auto 14px;
+}
+
+.contribution-card h3 {
+  font-family: "Baloo 2", cursive;
+  font-size: 1.5rem;
+  color: #ff70ab;
+  margin-bottom: 8px;
+}
+
+.contribution-card p {
+  color: #7b4c63;
+  font-weight: 600;
+}
+
+.minigames-section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+.minigame-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.minigame-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 34px 24px;
+  border: 3px solid #ffc7e1;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #ffffff, #fff2f8);
+  box-shadow: 0 18px 38px rgba(255, 143, 193, 0.18);
+  transition: 0.25s ease;
+}
+
+.minigame-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 26px 50px rgba(255, 143, 193, 0.3);
+}
+
+.minigame-emoji {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.minigame-card h3 {
+  font-family: "Baloo 2", cursive;
+  font-size: 1.6rem;
+  color: #ff5ba0;
+}
+
+.minigame-author {
+  font-weight: 700;
+  color: #a9587d;
+  margin: 4px 0 18px;
+}
+
+.minigame-play {
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6eac, #ffa6cf);
+  box-shadow: 0 12px 24px rgba(255, 112, 174, 0.32);
+}
+
+/* Lavender theme touches for new pieces */
+body.lavender-theme .game-button,
+body.lavender-theme .minigame-play,
+body.lavender-theme .next-level-btn,
+body.lavender-theme .welcome-arrow-circle {
+  background: linear-gradient(135deg, #a67cff, #e5c8ff);
+}
+
+body.lavender-theme .welcome-title,
+body.lavender-theme .bakery-promo-card h2,
+body.lavender-theme .minigame-card h3,
+body.lavender-theme .game-header h2 {
+  color: #a67cff;
+}

@@ -1,144 +1,36 @@
-// Game Constants
-const CARD_PAIRS = [
-  "🍕", "🍕",
-  "🍔", "🍔",
-  "🍟", "🍟",
-  "🌭", "🌭",
-  "🍿", "🍿",
-  "🥤", "🥤",
-  "🍪", "🍪",
-  "🎂", "🎂"
-];
+// =========================
+// THEME TOGGLE
+// =========================
 
-// Game State
-let gameBoard = document.getElementById("gameBoard");
-let cards = [];
-let flipped = [];
-let matched = [];
-let moves = 0;
-let pairs = 0;
-let isProcessing = false;
+const themeToggle = document.getElementById("themeToggle");
 
-// DOM Elements
-const movesDisplay = document.getElementById("moves");
-const pairsDisplay = document.getElementById("pairs");
-const resetBtn = document.getElementById("resetBtn");
-const winModal = document.getElementById("winModal");
-const playAgainBtn = document.getElementById("playAgainBtn");
-const finalStatsDisplay = document.getElementById("finalStats");
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("lavender-theme");
 
-// Initialize the game
-function init() {
-  moves = 0;
-  pairs = 0;
-  flipped = [];
-  matched = [];
-  isProcessing = false;
-  
-  movesDisplay.textContent = "0";
-  pairsDisplay.textContent = "0";
-  winModal.classList.remove("show");
-  
-  // Shuffle and shuffle the cards
-  const shuffled = CARD_PAIRS.sort(() => Math.random() - 0.5);
-  
-  // Create card elements
-  gameBoard.innerHTML = "";
-  cards = [];
-  
-  shuffled.forEach((emoji, index) => {
-    const card = document.createElement("button");
-    card.className = "card";
-    card.dataset.emoji = emoji;
-    card.dataset.index = index;
-    card.textContent = "?";
-    
-    card.addEventListener("click", flipCard);
-    gameBoard.appendChild(card);
-    cards.push(card);
-  });
-}
+  const lavenderIsOn = document.body.classList.contains("lavender-theme");
 
-// Flip a card
-function flipCard(e) {
-  const card = e.target;
-  
-  // Prevent clicking if already flipped, matched, or processing
-  if (
-    flipped.includes(card) ||
-    matched.includes(card) ||
-    isProcessing ||
-    card === flipped[0]
-  ) {
-    return;
-  }
-  
-  // Flip the card
-  card.textContent = card.dataset.emoji;
-  card.classList.add("flipped");
-  flipped.push(card);
-  
-  // Check if we have two flipped cards
-  if (flipped.length === 2) {
-    checkMatch();
-  }
-}
-
-// Check if two flipped cards match
-function checkMatch() {
-  isProcessing = true;
-  moves++;
-  movesDisplay.textContent = moves;
-  
-  const [card1, card2] = flipped;
-  const isMatch = card1.dataset.emoji === card2.dataset.emoji;
-  
-  if (isMatch) {
-    // Match found!
-    pairs++;
-    pairsDisplay.textContent = pairs;
-    
-    card1.classList.add("matched");
-    card2.classList.add("matched");
-    
-    matched.push(card1, card2);
-    flipped = [];
-    isProcessing = false;
-    
-    // Check if game is won
-    if (matched.length === CARD_PAIRS.length) {
-      setTimeout(showWinModal, 300);
-    }
+  if (lavenderIsOn) {
+    themeToggle.textContent = "Pink Mode";
   } else {
-    // No match - flip cards back
-    setTimeout(() => {
-      card1.textContent = "?";
-      card2.textContent = "?";
-      card1.classList.remove("flipped");
-      card2.classList.remove("flipped");
-      flipped = [];
-      isProcessing = false;
-    }, 1000);
+    themeToggle.textContent = "Lavender Mode";
   }
-}
 
-// Show win modal
-function showWinModal() {
-  finalStatsDisplay.textContent = `You completed the game in ${moves} moves and found ${pairs} pairs!`;
-  winModal.classList.add("show");
-}
+  createSparkleBurst(themeToggle);
+});
 
-// Reset the game
-function resetGame() {
-  init();
-}
+// =========================
+// FAVORITE CARDS INTERACTION
+// Only one card opens at a time
+// =========================
 
-// Event listeners
-resetBtn.addEventListener("click", resetGame);
-playAgainBtn.addEventListener("click", resetGame);
+const favoriteCards = document.querySelectorAll(".favorite-card");
 
-// Start the game on page load
-init();
+favoriteCards.forEach((card) => {
+  card.addEventListener("toggle", () => {
+    if (card.open) {
+      favoriteCards.forEach((otherCard) => {
+        if (otherCard !== card) {
+          otherCard.removeAttribute("open");
         }
       });
     }
@@ -185,12 +77,13 @@ if (contactSection) {
   const contactObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        const contactLinks = entry.target.querySelectorAll(".contact-card p:nth-child(3), .contact-card p:nth-child(4)");
         if (entry.isIntersecting) {
+          const contactLinks = entry.target.querySelectorAll(".contact-card p:nth-child(3), .contact-card p:nth-child(4)");
           contactLinks.forEach((link) => {
             link.classList.add("highlight-contact");
           });
         } else {
+          const contactLinks = entry.target.querySelectorAll(".contact-card p");
           contactLinks.forEach((link) => {
             link.classList.remove("highlight-contact");
           });

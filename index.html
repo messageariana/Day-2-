@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Memory Card Game</title>
+  <title>Ariana's Portfolio</title>
 
-  <!-- Pretty bubbly fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
@@ -57,7 +56,6 @@
         <div class="hero-buttons">
           <a href="#favorites" class="main-button">Explore My Favorites</a>
           <a href="#about" class="secondary-button">About Me</a>
-          <button id="playGameBtn" class="game-button">Play My Game!</button>
         </div>
       </div>
 
@@ -204,36 +202,6 @@
 
   </main>
 
-  <!-- Game Modal -->
-  <div id="gameModal" class="game-modal">
-    <div class="game-container">
-      <div class="game-header">
-        <h2>Ariana's Adventure</h2>
-        <button id="closeGameBtn" class="close-game">✕</button>
-      </div>
-      
-      <div class="game-info">
-        <div class="level-display">Level: <span id="levelNumber">1</span>/4</div>
-        <div class="fact-display" id="factDisplay"></div>
-      </div>
-
-      <canvas id="gameCanvas" width="800" height="500"></canvas>
-
-      <div class="game-controls">
-        <p>Arrow Keys to Move • Space to Jump</p>
-        <button id="resetGameBtn" class="reset-btn">Reset Level</button>
-      </div>
-
-      <div id="gameOver" class="game-over-screen" style="display: none;">
-        <div class="game-over-content">
-          <h3 id="gameOverTitle">You Made It!</h3>
-          <p id="gameOverMessage"></p>
-          <button id="nextLevelBtn" class="next-level-btn">Next Level →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <footer class="footer-signature">
     <div class="signature-card">
       <p class="made-by">Made by Ariana ♡</p>
@@ -242,6 +210,6 @@
   </footer>
 
   <script src="script.js"></script>
-  <script src="game.js"></script>
+
 </body>
 </html>

@@ -119,6 +119,47 @@ let bounce = 0;          // squash & stretch amount
 let totalCoins = 0;
 let collectedCoins = 0;
 
+// ----- Timer + best score (best time is saved on your computer) -----
+let levelStartMs = 0;     // when the current level started
+let finalTime = 0;        // frozen time when you beat the level
+
+function bestKey(i) { return "ariana_adventure_best_" + (i + 1); }
+function getBest(i) {
+  try { const v = localStorage.getItem(bestKey(i)); return v ? parseFloat(v) : null; }
+  catch (e) { return null; }
+}
+function setBest(i, t) {
+  try { localStorage.setItem(bestKey(i), t.toFixed(2)); } catch (e) {}
+}
+
+// ----- Sound effects (made with code, no sound files needed) -----
+let audioCtx = null;
+let soundOn = true;
+
+function initAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch (e) { audioCtx = null; }
+  }
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+}
+function beep(freq, dur, type, vol, delay) {
+  if (!soundOn || !audioCtx) return;
+  const t = audioCtx.currentTime + (delay || 0);
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type || "sine";
+  osc.frequency.setValueAtTime(freq, t);
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.exponentialRampToValueAtTime(vol || 0.14, t + 0.012);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.start(t); osc.stop(t + dur + 0.03);
+}
+function sfxJump() { beep(520, 0.15, "square", 0.10); beep(760, 0.12, "square", 0.06, 0.04); }
+function sfxCoin() { beep(900, 0.08, "sine", 0.16); beep(1320, 0.12, "sine", 0.14, 0.06); }
+function sfxWin()  { [523, 659, 784, 1047].forEach((n, i) => beep(n, 0.2, "triangle", 0.16, i * 0.12)); }
+
 function makePlayer(level) {
   return {
     x: level.start.x, y: level.start.y,
@@ -147,6 +188,8 @@ function loadLevel(index) {
   levelNumberEl.textContent = index + 1;
   factDisplay.textContent = level.emoji + "  Collect the hearts and reach the goal!";
   gameOverScreen.style.display = "none";
+  levelStartMs = performance.now();   // start the timer
+  finalTime = 0;
 }
 
 function overlaps(a, b) {
@@ -242,6 +285,7 @@ function update() {
         c.got = true;
         collectedCoins++;
         spawnSparkle(c.x, c.y);
+        sfxCoin();
       }
     }
   }
@@ -366,6 +410,18 @@ function draw() {
   ctx.font = "bold 18px Nunito, sans-serif";
   ctx.textAlign = "left"; ctx.textBaseline = "top";
   ctx.fillText(`♡ ${collectedCoins}/${totalCoins}`, 16, 14);
+
+  // timer (top-right) + best time below it
+  const shownTime = levelCleared ? finalTime : (performance.now() - levelStartMs) / 1000;
+  ctx.textAlign = "right";
+  ctx.fillStyle = "rgba(123,76,99,0.9)";
+  ctx.fillText(`⏱ ${shownTime.toFixed(1)}s`, W - 16, 14);
+  const best = getBest(levelIndex);
+  if (best !== null) {
+    ctx.font = "bold 14px Nunito, sans-serif";
+    ctx.fillStyle = "rgba(166,124,255,0.95)";
+    ctx.fillText(`best ${best.toFixed(1)}s`, W - 16, 38);
+  }
 }
 
 function drawPlayer() {
@@ -468,6 +524,20 @@ function winLevel() {
   const isLast = levelIndex === LEVELS.length - 1;
   const allCoins = collectedCoins === totalCoins;
 
+  // freeze the timer and check for a new best time
+  finalTime = (performance.now() - levelStartMs) / 1000;
+  const prevBest = getBest(levelIndex);
+  const isRecord = prevBest === null || finalTime < prevBest;
+  if (isRecord) setBest(levelIndex, finalTime);
+  const bestNow = getBest(levelIndex);
+
+  sfxWin();
+
+  // a little line about your time
+  let timeLine = `⏱ Time: ${finalTime.toFixed(1)}s`;
+  if (bestNow !== null) timeLine += ` • Best: ${bestNow.toFixed(1)}s`;
+  if (isRecord) timeLine += "  🏆 New record!";
+
   // confetti burst
   const colors = ["#ff6eac", "#ffd451", "#a67cff", "#7fd1ff", "#ff9ac8"];
   for (let i = 0; i < 80; i++) {
@@ -485,11 +555,11 @@ function winLevel() {
   if (isLast) {
     gameOverTitle.textContent = "You Finished! 🎉";
     gameOverMessage.textContent =
-      "You cleared all 4 levels! One last secret: my favorite scents are vanilla & cedar. 🕯️ Thanks for playing!";
+      "You cleared all 4 levels! One last secret: my favorite scents are vanilla & cedar. 🕯️ " + timeLine;
     nextLevelBtn.textContent = "Play Again ↻";
   } else {
     gameOverTitle.textContent = allCoins ? "Level Complete! ⭐ (All hearts!)" : "Level Complete! ⭐";
-    gameOverMessage.textContent = level.fact;
+    gameOverMessage.textContent = level.fact + "  —  " + timeLine;
     nextLevelBtn.textContent = "Next Level →";
   }
   gameOverScreen.style.display = "flex";
@@ -498,8 +568,21 @@ function winLevel() {
 // ---------------------------------------------------------
 //  BUTTONS + CONTROLS
 // ---------------------------------------------------------
-function openGame()  { gameModal.classList.add("active"); loadLevel(0); startLoop(); }
+function openGame()  { initAudio(); gameModal.classList.add("active"); loadLevel(0); startLoop(); }
 function closeGame() { gameModal.classList.remove("active"); stopLoop(); }
+
+// add a "Sound" on/off button next to "Reset Level"
+const soundBtn = document.createElement("button");
+soundBtn.type = "button";
+soundBtn.className = "reset-btn";
+soundBtn.textContent = "🔊 Sound: On";
+soundBtn.addEventListener("click", () => {
+  soundOn = !soundOn;
+  soundBtn.textContent = soundOn ? "🔊 Sound: On" : "🔇 Sound: Off";
+  if (soundOn) { initAudio(); beep(880, 0.1, "sine", 0.12); }
+});
+const controlsBar = document.querySelector(".game-controls");
+if (controlsBar) controlsBar.appendChild(soundBtn);
 
 playGameBtn.addEventListener("click", openGame);
 closeGameBtn.addEventListener("click", closeGame);
@@ -517,6 +600,7 @@ function tryJump() {
     player.onGround = false;
     player.coyote = 0;
     bounce = 6; // stretch up
+    sfxJump();
   }
 }
 
